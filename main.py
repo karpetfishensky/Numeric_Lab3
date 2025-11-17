@@ -86,10 +86,8 @@ def main():
         alpha, beta = compute_fourier_coefficients(x_k, y_k, n)
         print(f"\nКоэффициенты:")
         print(f"α₀ = {alpha[0]:.4f}")
-        for l in range(1, min(n + 1, 10)):  # Показываем первые 10 коэффициентов
+        for l in range(1, n + 1):
             print(f"α_{l} = {alpha[l]:.4f}, β_{l} = {beta[l]:.4f}")
-        if n > 10:
-            print("...")
 
     # Построение графиков
     fig, axes = plt.subplots(1, 3, figsize=(18, 6))
@@ -123,9 +121,9 @@ def main():
     plt.show()
 
     # Таблица значений функции и многочленов
-    print(f"\n{'=' * 80}")
+    print(f"\n{'=' * 100}")
     print("ТАБЛИЦА ЗНАЧЕНИЙ ФУНКЦИИ И ТРИГОНОМЕТРИЧЕСКИХ МНОГОЧЛЕНОВ")
-    print(f"{'=' * 80}")
+    print(f"{'=' * 100}")
 
     x_table = np.linspace(-np.pi / 2, np.pi / 2, 41)  # 40 интервалов + 1 = 41 точка
     y_table = f(x_table)
@@ -134,7 +132,7 @@ def main():
     for n in n_values:
         print(f"{'φ(x), n=' + str(n):>15} ", end="")
     print()
-    print("-" * 80)
+    print("-" * 100)
 
     # Вычисляем значения многочленов для всех n
     poly_values = {}
@@ -143,15 +141,13 @@ def main():
         alpha, beta = compute_fourier_coefficients(x_k, y_k, n)
         poly_values[n] = trigonometric_polynomial(x_table, alpha, beta, n)
 
-    # Выводим таблицу (первые 20 точек)
-    for i in range(min(20, len(x_table))):
+    # Выводим таблицу (ВСЕ точки)
+    for i in range(len(x_table)):
         x = x_table[i]
         print(f"{x:>8.2f} {y_table[i]:>10.4f} ", end="")
         for n in n_values:
             print(f"{poly_values[n][i]:>15.4f} ", end="")
         print()
-
-    print("... (остальные точки аналогично)")
 
 
 if __name__ == "__main__":
